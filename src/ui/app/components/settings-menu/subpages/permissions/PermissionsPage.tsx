@@ -25,6 +25,8 @@ const PermissionsPage = () => {
         const _permissions = Object.values(await Permissions.getPermissions());
         const _preapprovals = await Transactions.getPreapprovalRequests();
 
+        console.log('_permissions :>> ', _permissions);
+
         const _connectedApps: ConnectedApp[] = [];
 
         for (const _permission in _permissions) {

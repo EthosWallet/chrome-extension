@@ -110,6 +110,11 @@ export const loadAccountInformationFromStorage = createAsyncThunk(
                     seed: (keypairVault.getSeed(0) || '').toString(),
                 },
             ];
+            await setEncrypted(
+                'accountInfos',
+                JSON.stringify(accountInfos),
+                passphrase
+            );
         }
 
         activeAccountIndex = parseInt(
@@ -200,6 +205,8 @@ export const saveAccountInfos = createAsyncThunk(
         } = getState() as RootState;
 
         if (passphrase) {
+            console.log('SETTING ENCRYPTED ACCINFOS in saveAccountInfos');
+
             await setEncrypted(
                 'accountInfos',
                 JSON.stringify(accountInfos),
@@ -334,6 +341,8 @@ export const savePassphrase: AsyncThunk<
 
         if (passphrase && mnemonic) {
             await setEncrypted('mnemonic', mnemonic, passphrase);
+            console.log('SETTING ENCRYPTED ACCINFOS in savePassphrase');
+
             await setEncrypted(
                 'accountInfos',
                 JSON.stringify([

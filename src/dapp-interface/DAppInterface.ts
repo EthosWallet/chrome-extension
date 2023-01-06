@@ -33,11 +33,14 @@ import type {
     ExecuteTransactionRequest,
     ExecuteTransactionResponse,
 } from '_payloads/transactions';
+import type { GetAccountCustomizations } from '_src/shared/messaging/messages/payloads/account/GetAccountCustomizations';
+import type { GetAccountCustomizationsResponse } from '_src/shared/messaging/messages/payloads/account/GetAccountCustomizationsResponse';
 import type { DisconnectRequest } from '_src/shared/messaging/messages/payloads/connections/DisconnectRequest';
 import type { DisconnectResponse } from '_src/shared/messaging/messages/payloads/connections/DisconnectResponse';
 import type { Preapproval } from '_src/shared/messaging/messages/payloads/transactions/Preapproval';
 import type { OpenWallet } from '_src/shared/messaging/messages/payloads/url/OpenWallet';
 import type { OpenWalletResponse } from '_src/shared/messaging/messages/payloads/url/OpenWalletResponse';
+import type { AccountCustomization } from '_src/types/AccountCustomization';
 import type { Observable } from 'rxjs';
 
 export class DAppInterface {
@@ -80,6 +83,18 @@ export class DAppInterface {
                 permissions,
             }),
             (response) => response.result
+        );
+    }
+
+    public getAccountCustomizations(): Promise<AccountCustomization[]> {
+        return mapToPromise(
+            this.send<
+                GetAccountCustomizations,
+                GetAccountCustomizationsResponse
+            >({
+                type: 'get-account-customizations',
+            }),
+            (response) => response.accountCustomizations
         );
     }
 

@@ -4,10 +4,10 @@ import * as React from 'react';
 import App from '_app/index';
 import { setTransactionRequests } from '_redux/slices/transaction-requests';
 import { simulateAuthenticatedUser } from '_src/test/utils/fake-local-storage';
+import { mockCommonCalls } from '_src/test/utils/mockchain';
 import { renderWithProviders } from '_src/test/utils/react-rendering';
 
 import type { TransactionRequest } from '_payloads/transactions';
-import { mockCommonCalls } from '_src/test/utils/mockchain';
 
 describe('The Transaction Approval popup', () => {
     beforeEach(async () => {
