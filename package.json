@@ -114,7 +114,7 @@
         "emoji-mart": "^5.4.0",
         "formik": "^2.2.9",
         "framer-motion": "^7.6.5",
-        "isomorphic-unfetch": "^3.1.0",
+        "isomorphic-unfetch": "^4.0.2",
         "mitt": "^3.0.0",
         "react": "^18.2.0",
         "react-animated-numbers": "^0.14.0",
