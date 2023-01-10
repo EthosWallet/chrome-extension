@@ -1,5 +1,5 @@
-import { useCallback, useRef, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import getNextWalletColor from '../../helpers/getNextWalletColor';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -28,17 +28,28 @@ interface EditWalletProps {
 
 const EditWallet = ({ setIsWalletEditing }: EditWalletProps) => {
     const [loading, setLoading] = useState(false);
+    const [walletIndex, setWalletIndex] = useState(0);
     const [isColorPickerMenuOpen, setIsColorPickerMenuOpen] = useState(false);
     const [isEmojiPickerMenuOpen, setIsEmojiPickerMenuOpen] = useState(false);
-    const [searchParams] = useSearchParams();
-
     const _accountInfos = useAppSelector(({ account }) => account.accountInfos);
-    let walletIndex = 0;
-    const indexFromParam = searchParams.get('index');
-    if (indexFromParam !== null) {
-        walletIndex = +indexFromParam;
-    }
-    const currentAccountInfo = _accountInfos[walletIndex];
+
+    useEffect(() => {
+        const href = window.location.href;
+        const indexString = href.match(/&index=(\d+)/);
+        const index = +(indexString?.[1] || 0);
+
+        const { name, color, emoji } = _accountInfos[index];
+
+        setWalletIndex(index);
+        if (name) setDraftName(name);
+        if (color) setDraftColor(color);
+        if (emoji) setDraftEmoji(emoji);
+    }, [_accountInfos]);
+
+    const currentAccountInfo = useMemo(
+        () => _accountInfos[walletIndex],
+        [_accountInfos, walletIndex]
+    );
     const draftAccountInfos = useRef<AccountInfo[]>(_accountInfos);
 
     const [draftName, setDraftName] = useState<string>(

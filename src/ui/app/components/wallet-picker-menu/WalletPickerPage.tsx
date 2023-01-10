@@ -26,6 +26,8 @@ function WalletPickerPage({
     const walletPickerUrl = useWalletPickerUrl();
     const walletPickerHomeUrl = useNextWalletPickerUrl(true, '/');
     const isWalletEditorIsOpen = useWalletEditorIsOpen();
+    console.log('walletPickerUrl', isWalletEditorIsOpen, walletPickerUrl);
+
     const navigate = useNavigate();
     const handleOnCloseMenu = useCallback(() => {
         setIsWalletEditing(false);

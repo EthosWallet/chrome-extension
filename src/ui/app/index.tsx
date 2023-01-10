@@ -2,7 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useEffect } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import {
+    Navigate,
+    Route,
+    Routes,
+    useLocation,
+    useParams,
+} from 'react-router-dom';
 
 import useSizeWindow from './hooks/useSizeWindow';
 import { DappSignMessageApprovalPage } from './pages/dapp-sign-message-approval';

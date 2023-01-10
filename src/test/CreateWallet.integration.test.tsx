@@ -33,6 +33,9 @@ describe('Rendering the Tokens page', () => {
         await userEvent.click(wallet2);
         await screen.findByText('Edit Wallet');
 
+        await waitFor(
+            async () => (await screen.findAllByText('Wallet 2')).length > 0
+        );
         const input = screen.getByDisplayValue('Wallet 2');
         await userEvent.clear(input);
         await userEvent.type(input, 'Gaming');

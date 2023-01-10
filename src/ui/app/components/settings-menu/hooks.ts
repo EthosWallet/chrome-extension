@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useMemo } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams, useParams } from 'react-router-dom';
 
 const SETTINGS_PARAM = 'menu';
 const SECURITY_PARAM = 'security';
@@ -27,6 +27,7 @@ export function useSecurityUrl() {
 
 export function useWalletPickerUrl() {
     const [searchParams] = useSearchParams();
+    console.log('SEARCH PARAM', searchParams.get(WALLET_PICKER_PARAM));
     if (searchParams.has(WALLET_PICKER_PARAM)) {
         return searchParams.get(WALLET_PICKER_PARAM) || '/';
     }
@@ -123,11 +124,11 @@ export function useNextWalletPickerUrl(
  */
 export function useEditWalletUrl(walletIndex: number) {
     const [searchParams] = useSearchParams();
-    const { pathname } = useLocation();
+    const params = useParams();
     return useMemo(() => {
         searchParams.set(WALLET_PICKER_PARAM, '/edit');
         searchParams.set('index', walletIndex.toString());
         const search = searchParams.toString();
-        return `${pathname}${search ? '?' : ''}${search}`;
-    }, [searchParams, pathname, walletIndex]);
+        return `${params['*']}${search ? '?' : ''}${search}`;
+    }, [searchParams, params, walletIndex]);
 }
