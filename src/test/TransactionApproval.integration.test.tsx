@@ -5,26 +5,31 @@ import _ from 'lodash';
 import nock from 'nock';
 import * as React from 'react';
 
+import { BackgroundClient } from '_app/background-client';
 import App from '_app/index';
 import { setTransactionRequests } from '_redux/slices/transaction-requests';
 import { simulateAuthenticatedUser } from '_src/test/utils/fake-local-storage';
 import { renderTemplate } from '_src/test/utils/json-templates';
 import { mockCommonCalls } from '_src/test/utils/mockchain';
 import { renderWithProviders } from '_src/test/utils/react-rendering';
-import store, { createStore } from '_store';
+import { createStore } from '_store';
 import { thunkExtras } from '_store/thunk-extras';
 
 import type { TransactionRequest } from '_payloads/transactions';
+import type { AppStore } from '_store';
 
 describe('The Transaction Approval popup', () => {
+    let store: AppStore;
     beforeEach(async () => {
         mockCommonCalls();
         simulateAuthenticatedUser();
+        store = createStore({});
+        thunkExtras.background = new BackgroundClient();
         thunkExtras.background.init(store.dispatch);
     });
 
     test('shows the transaction and allows user to approve it', async () => {
-        const { txRequestId, store } = simulateReduxStateWithTransaction();
+        const { txRequestId } = simulateReduxStateWithTransaction();
         const { executeScope } = mockBlockchainTransactionExecution();
 
         const testWindow = new JSDOM().window as unknown as Window;
@@ -69,9 +74,8 @@ describe('The Transaction Approval popup', () => {
             },
         };
 
-        const store = createStore({});
         store.dispatch(setTransactionRequests([txRequest]));
-        return { txRequestId, store };
+        return { txRequestId };
     }
 
     function mockBlockchainTransactionExecution() {
