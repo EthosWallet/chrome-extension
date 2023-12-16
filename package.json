@@ -75,7 +75,7 @@
         "jest-transform-stub": "^2.0.0",
         "mini-css-extract-plugin": "^2.7.5",
         "mustache": "^4.2.0",
-        "nock": "^13.2.9",
+        "nock": "^13.4.0",
         "onchange": "^7.1.0",
         "postcss-loader": "^7.0.2",
         "postcss-preset-env": "^9.1.3",
